@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Fraud Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #282c35; /* Dark background color */
+            color: #fff;
+        }
+
+        h1 {
+            color: #8bc34a; /* Light green */
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+            width: 300px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #8bc34a;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #8bc34a;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #282c35; /* Dark text color */
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        button {
+            background-color: #8bc34a;
+            color: #282c35;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            animation: pulse 1s infinite alternate;
+        }
+
+        button:hover {
+            background-color: #4caf50;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        p {
+            color: #8bc34a;
+            margin: 10px 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            to {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Statistical Fraud Detection</h1>
+    
+    <form id="anomalyForm">
+        <label for="functionSelect">Select Function:</label>
+        <select id="functionSelect" name="functionSelect">
+            <option value="modified_zscore">Modified Z-Score</option>
+            <option value="tukey_fences">Tukey Fences</option>
+            <option value="z_score">Z-Score</option>
+        </select>
+
+        <label for="paymentType">Payment Type:</label>
+        <select id="paymentType" name="paymentType">
+            <option value="debit">Debit</option>
+            <option value="credit">Credit</option>
+        </select>
+
+        <label for="oldBalance">Old Balance:</label>
+        <input type="number" id="oldBalance" name="oldBalance" required>
+
+        <label for="amount">Amount of Transaction:</label>
+        <input type="number" id="amount" name="amount" required>
+
+        <button type="button" onclick="predictAnomaly()">Predict Anomaly</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function predictAnomaly() {
+            var selectedFunction = document.getElementById('functionSelect').value;
+            var paymentType = document.getElementById('paymentType').value;
+            var oldBalanceValue = parseFloat(document.getElementById('oldBalance').value);
+            var amountValue = parseFloat(document.getElementById('amount').value);
+
+            fetch('/predict_anomaly', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'selectedFunction': selectedFunction,
+                    'paymentType': paymentType,
+                    'oldBalance': oldBalanceValue,
+                    'amount': amountValue
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '<p>Prediction: ' + (data.prediction === 1 ? 'Anomaly' : 'Not Anomaly') + '</p>';
+                resultDiv.innerHTML += '<p>Current Balance: ' + data.currentBalance.toFixed(2) + '</p>';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

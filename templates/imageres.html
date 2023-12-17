@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anomaly Detection Result</title>
+</head>
+<body>
+    <h1>Anomaly Detection Result</h1>
+    {% if anomalies %}
+        <p style="color: red;">Anomaly Detected!</p>
+    {% else %}
+        <p style="color: green;">No Anomaly Detected.</p>
+    {% endif %}
+</body>
+</html>
+

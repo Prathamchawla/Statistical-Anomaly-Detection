@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Fraud Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #4caf50;
+            margin-top: 50px;
+            font-size: 2em;
+            animation: glow 2s infinite alternate;
+        }
+
+        .animated-cube {
+            perspective: 800px;
+            margin-top: 50px;
+        }
+
+        .cube {
+            width: 100px;
+            height: 100px;
+            transform-style: preserve-3d;
+            transform: rotateX(-30deg) rotateY(-45deg);
+            animation: rotateCube 5s infinite linear;
+        }
+
+        .face {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background: linear-gradient(45deg, #8bc34a, #4caf50);
+            border: 1px solid #fff;
+        }
+
+        .face:nth-child(2) {
+            transform: rotateY(90deg);
+        }
+
+        .face:nth-child(3) {
+            transform: rotateY(180deg);
+        }
+
+        .face:nth-child(4) {
+            transform: rotateY(-90deg);
+        }
+
+        .rotate-tetrahedron {
+            margin-top: 50px;
+            animation: rotateTetrahedron 5s infinite linear;
+        }
+
+        .tetrahedron {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 87px solid #8bc34a;
+            transform: rotateX(-60deg) rotateY(45deg) rotateZ(0deg);
+            animation: pulse 1s infinite alternate;
+        }
+
+        .pulse-sphere {
+            margin-top: 50px;
+            animation: pulse 1s infinite alternate;
+        }
+
+        .sphere {
+            width: 50px;
+            height: 50px;
+            background-color: #8bc34a;
+            border-radius: 50%;
+            animation: pulse 1s infinite alternate;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 50px;
+        }
+
+        form {
+            width: 400px;
+            margin: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            transition: transform 0.5s ease-in-out;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        form:hover {
+            transform: scale(1.05);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        select:focus, input:focus {
+            border-color: #8bc34a;
+        }
+
+        button {
+            background-color: #8bc34a;
+            color: #111;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            animation: pulse 1s infinite alternate;
+        }
+
+        button:hover {
+            background-color: #4caf50;
+        }
+
+        .result-container {
+            width: 400px;
+            margin-left: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .result {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            background-color: #4caf50;
+            color: #fff;
+            animation: fadeInUp 1s ease-out, colorChange 2s infinite alternate, bounce 1s infinite alternate;
+            position: relative;
+            z-index: 0;
+        }
+
+        .result h2 {
+            margin-bottom: 10px;
+        }
+
+        .animated-shapes {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .animated-shapes div {
+            height: 150px;
+            width: 150px;
+            background-color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            animation: rotate 3s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .shape:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes colorChange {
+            from {
+                background-color: #4caf50;
+            }
+            to {
+                background-color: #8bc34a;
+            }
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes glow {
+            to {
+                text-shadow: 0 0 10px #8bc34a, 0 0 20px #4caf50, 0 0 30px #8bc34a;
+            }
+        }
+
+        @keyframes rotateCube {
+            from {
+                transform: rotateX(-30deg) rotateY(-45deg);
+            }
+            to {
+                transform: rotateX(330deg) rotateY(315deg);
+            }
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotateTetrahedron {
+            to {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-cube">
+        <div class="cube">
+            <div class="face"></div>
+            <div class="face"></div>
+            <div class="face"></div>
+            <div class="face"></div>
+        </div>
+    </div>
+
+    <h1>Fraud Detection</h1>
+
+    <div class="rotate-tetrahedron">
+        <div class="tetrahedron"></div>
+    </div>
+
+    <div class="container">
+        <form action="/machinelearningpredict" method="post">
+            <label for="type_of_payment">Type of Payment:</label>
+            <select name="type_of_payment" id="type_of_payment">
+                <option value="cash_out">Cash Out</option>
+                <option value="payment">Payment</option>
+                <option value="cash_in">Cash In</option>
+                <option value="transfer">Transfer</option>
+                <option value="debit">Debit</option>
+            </select><br>
+
+            <label for="old_balance">Old Balance:</label>
+            <input type="text" name="old_balance" required><br>
+
+            <label for="amount">Amount:</label>
+            <input type="text" name="amount" required><br>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <div class="result-container">
+            {% if result %}
+            <div class="result">
+                <h2>Result:</h2>
+                <p>{{ result }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="animated-shapes">
+        <div>
+            <div class="shape"></div>
+        </div>
+        <div>
+            <div class="shape"></div>
+        </div>
+        <div>
+            <div class="shape"></div>
+        </div>
+    </div>
+</body>
+</html>
